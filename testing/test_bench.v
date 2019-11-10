@@ -1,5 +1,5 @@
 
-`timescale 1ms / 100us
+`timescale 100us / 100us
 module hello_world;
 
     reg rst;
