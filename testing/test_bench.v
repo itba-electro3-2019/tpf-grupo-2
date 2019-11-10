@@ -13,6 +13,7 @@ module hello_world;
     reg [2:0] sw;
 
     clock_gen clk_gen(clk);
+    sw_clock sw_clock(sw);
 
     button_up_clock_gen button_up_clock_gen(but_up);
 
@@ -20,7 +21,6 @@ module hello_world;
 
     initial begin
     but_down = 1'b0;
-    sw = 1'b0;
     rst = 1'b0;
     #10000000;
     $finish;
