@@ -1,7 +1,7 @@
 `timescale 100us / 100us
 module button_up_clock_gen(but_up);
 
-parameter PERIOD = 40;
+parameter PERIOD = 10;
 
 output reg but_up;
 

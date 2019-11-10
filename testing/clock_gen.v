@@ -1,7 +1,7 @@
 `timescale 100us / 100us
 module clock_gen(clk);
 
-parameter PERIOD = 10;
+parameter PERIOD = 0.00083;
 
 output reg clk;
 

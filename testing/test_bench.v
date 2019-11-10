@@ -22,6 +22,7 @@ module hello_world;
       initial begin
 	rst = 1'b0;
 	#10
+    sw = 2'b0;
 	rst = 1'b1;
 	#10
 	rst = 1'b0;
