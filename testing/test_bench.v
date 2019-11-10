@@ -22,7 +22,7 @@ module hello_world;
     but_down = 1'b0;
     sw = 1'b0;
     rst = 1'b0;
-    #10;
+    #10000000;
     $finish;
 
     end
