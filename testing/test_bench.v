@@ -13,7 +13,7 @@ module hello_world;
     reg [2:0] sw;
 
     clock_gen clk_gen(clk);
-    sw_clock sw_clock(sw);
+    //sw_clock sw_clock(sw);
 
     button_up_clock_gen button_up_clock_gen(but_up);
 
