@@ -26,4 +26,4 @@ module hello_world;
     $finish;
 
     end
-endmodule : hello_world
+endmodule
