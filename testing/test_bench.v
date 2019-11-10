@@ -19,10 +19,15 @@ module hello_world;
 
     top_vga uut(clk, rst, sw,but_up,but_down,but_up,but_down, hsync, vsync, rgb );
 
-    initial begin
+      initial begin
+	rst = 1'b0;
+	#10
+	rst = 1'b1;
+	#10
+	rst = 1'b0;
     but_down = 1'b0;
     rst = 1'b0;
-    #10000000;
+    #1000000;
     $finish;
 
     end
