@@ -1,7 +1,7 @@
-`timescale 100ps / 100ps
+`timescale 1ns / 1ps
 module clock_gen(clk);
 
-parameter PERIOD = 83;
+parameter PERIOD = 21;
 
 output reg clk;
 
