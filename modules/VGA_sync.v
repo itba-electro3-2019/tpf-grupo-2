@@ -3,7 +3,7 @@ module vga_sync(
     output hsync , vsync , video_on, p_tick,
     output [9:0] pixel_x, pixel_y
     );
- 
+
     //constant declaration
     //VGA 640-by-480 sync parameters
  

@@ -15,7 +15,6 @@ module position(clk, posx, posy, posbarraiy, posbarrady);
     end
  
     always @(posedge clk2) begin
- 
         // Golpea diagonal abajo derecha
         if (dirx==0 & diry==0) begin
             posx=posx+1;
