@@ -1,96 +1,67 @@
 module vga_sync(
-    input clk, reset,
-    output hsync , vsync , video_on, p_tick,
-    output [9:0] pixel_x, pixel_y
-    );
+	input clk,
+	output reg hsync = 1'b1,
+	output reg vsync = 1'b1,
+	output reg [9:0] pixel_x = 0,
+	output reg [9:0] pixel_y = 0 
+);
 
-    //constant declaration
-    //VGA 640-by-480 sync parameters
- 
     localparam HD = 640;     // horizontal display area
     localparam HF = 48 ;     // h.front(left)border
     localparam HB = 16 ;     // h.back(right)border
     localparam HR = 96 ;     // h.retrace
     localparam VD = 480;     // vertical display area
-    localparam VF = 10;         // v.front(top)border
-    localparam VB = 33;         // v.back(bottom)border
-    localparam VR = 2;        // v.retrace
- 
-    // mod-2 counter
- 
-    reg mod2_reg;
-    wire mod2_next ;
-    // sync counters
-    reg [9:0] h_count_reg, h_count_next;
-    reg [9:0] v_count_reg , v_count_next;
-    // output buffer
-    reg v_sync_reg , h_sync_reg;
-    wire v_sync_next , h_sync_next ;
- 
-    // status signal
-    wire h_end, v_end, pixel_tick;
- 
-    // body
-    // registers
- 
-    always @(posedge clk, posedge reset)
-        if (reset)begin 
-            mod2_reg <= 1'b0;
-            v_count_reg <= 0;
-            h_count_reg <= 0;
-            v_sync_reg <= 1'b0;
-            h_sync_reg <= 1'b0;
-        end
-        else begin
-            mod2_reg <= mod2_next;
-            v_count_reg <= v_count_next;
-            h_count_reg <= h_count_next;
-            v_sync_reg <= v_sync_next;
-            h_sync_reg <= h_sync_next;
-        end
- 
-    // mod-2 circuit to generate 25 MHz enable tick
-    assign mod2_next = ~mod2_reg;
-    assign pixel_tick = mod2_reg;
- 
-    // status signals
-    // end of horizontal counter (799)
-    assign h_end = (h_count_reg==(HD+HF+HB+HR-1));
-    // end of vertical counter (524)
-    assign v_end = (v_count_reg==(VD+VF+VB+VR-1));
- 
-    // next-state logic of mod-800 horizontal sync counter
-    always @*
-        if (pixel_tick)
-        // 25 MHz p u l s e
-            if (h_end)
-                h_count_next = 0;
-            else
-                h_count_next = h_count_reg+1;
-        else
-            h_count_next = h_count_reg;
- 
-    // next-state logico fmod-525 vertical sync counter
-    always @*
-        if (pixel_tick & h_end)
-            if (v_end)
-                v_count_next = 0 ;
-            else
-                v_count_next = v_count_reg + 1;
-        else
-            v_count_next = v_count_reg;
- 
-    // horizontal and vertical sync, buffered to avoid glitch
-    // h-sync-next asserted between 656 and 751
-    assign h_sync_next = (h_count_reg>=(HD+HB) && h_count_reg<=(HD+HB+HR-1));
-    // vh-sync-next asserted between 490 and 491
-    assign v_sync_next = (v_count_reg>=(VD+VB) && v_count_reg<=(VD+VB+VR-1));
-    // video on/off
-    assign video_on = (h_count_reg<HD) && (v_count_reg<VD);
-    // output
-    assign hsync = h_sync_reg;
-    assign vsync = v_sync_reg;
-    assign pixel_x = h_count_reg;
-    assign pixel_y = v_count_reg;
-    assign p_tick = pixel_tick;
+    localparam VF = 10;      // v.front(top)border
+    localparam VB = 33;      // v.back(bottom)border
+    localparam VR = 2;       // v.retrace
+	
+	wire clk25M;
+	pll pll(.ref_clk_i(clk),.rst_n_i(1'b1),.outcore_o(),.outglobal_o(clk25M));
+	
+	// end of horizontal counter (799)
+    assign h_end = (pixel_x==(HD+HF+HB+HR-1));
+
+	always@(posedge clk25M) begin
+		if (h_end) begin
+			if(pixel_y < VD+VF+VB+VR-1)			
+				pixel_y <= pixel_y + 1;
+			else pixel_y <= 0;			
+		end
+	end
+
+	always@(posedge clk25M) begin
+		if(pixel_x < HD+HF+HB+HR-1)			
+			pixel_x <= pixel_x + 1;
+		else 
+			pixel_x <= 0;		
+	end
+
+	always @(posedge clk25M) begin
+		if(pixel_x >= 0 && pixel_x < HD)
+			hsync <= 1;
+		else 
+			if (pixel_x >= HD && pixel_x < HD+HB)
+				hsync <= 1;
+			else 
+				if (pixel_x >= HD+HB && pixel_x < HD+HB+HR)
+					hsync <= 0;
+				else 
+					if (pixel_x < HD+HB+HF+HR)
+						hsync <= 1;
+	end
+
+	always @(posedge clk25M) begin
+		if(pixel_y <  VD)
+			vsync <= 1;
+		else 
+			if (pixel_y >= VD && pixel_y < VD+VF)
+				vsync <= 1;
+			else 
+				if (pixel_y >= VD+VF && pixel_y < VD+VF+VR)
+					vsync <= 0;
+				else 
+					if (pixel_y < VD+VF+VR+VB)
+						vsync <= 1;
+	end
+
 endmodule

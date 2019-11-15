@@ -3,7 +3,7 @@ module Barrai(puls1, puls2, clk, posbarraiy);
     input clk;
     input puls1;
     input puls2;
-    output reg [9:0] posbarraiy=60;
+    output reg [9:0] posbarraiy=220;
 
     reg clk3;
     reg [16:0] temp1=0;
@@ -14,14 +14,14 @@ module Barrai(puls1, puls2, clk, posbarraiy);
 
     always@(posedge clk3)begin
 
-        if(puls1)begin
+        if(~puls1)begin
             posbarraiy=posbarraiy-1;
             if (posbarraiy<=10) posbarraiy=10;
             else posbarraiy=posbarraiy;
             end
-        else if(puls2)begin
+        else if(~puls2)begin
             posbarraiy=posbarraiy+1;
-            if (posbarraiy>=470) posbarraiy=470;
+            if (posbarraiy>=370) posbarraiy=370;
             else posbarraiy=posbarraiy;
             end
         else posbarraiy=posbarraiy;

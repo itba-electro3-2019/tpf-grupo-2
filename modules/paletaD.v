@@ -3,7 +3,7 @@ module Barrad(puls3, puls4, clk, posbarrady);
     input clk;
     input puls3;
     input puls4;
-    output reg [9:0] posbarrady=60;
+    output reg [9:0] posbarrady=220;
  
     reg clk3;
     reg [16:0] temp1=0;
@@ -14,14 +14,14 @@ module Barrad(puls3, puls4, clk, posbarrady);
  
     always@(posedge clk3)begin
  
-        if(puls3)begin
+        if(~puls3)begin
             posbarrady=posbarrady-1;
             if (posbarrady<=10) posbarrady=10;
             else posbarrady=posbarrady;          
             end
-        else if(puls4)begin
+        else if(~puls4)begin
             posbarrady=posbarrady+1;
-            if (posbarrady>=470) posbarrady=470;
+            if (posbarrady>=370) posbarrady=370;
             else posbarrady=posbarrady;
             end
         else posbarrady=posbarrady;
