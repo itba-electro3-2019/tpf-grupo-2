@@ -37,7 +37,7 @@ module vga_sync(
 	end
 
 	always @(posedge clk25M) begin
-		if(pixel_x >= 0 && pixel_x < HD)
+		if(pixel_x >= 0 && pixel_x < HD)3
 			hsync <= 1;
 		else 
 			if (pixel_x >= HD && pixel_x < HD+HB)

@@ -66,31 +66,31 @@ module Imagen(
 				case (vidasi)
 		
 					7 : begin
-						if (pi1|pi2|pi3|pi4|pi5|pi6|pi7)rgb_reg = 3'b011;
+						if (pi1|pi2|pi3|pi4|pi5|pi6|pi7)rgb_reg = 3'b111;
 						else if(x<=220 & y<=10) rgb_reg=3'b010;
 						end
 					6 : begin
-						if (pi1|pi2|pi3|pi4|pi5|pi6)rgb_reg = 3'b011;
+						if (pi1|pi2|pi3|pi4|pi5|pi6)rgb_reg = 3'b111;
 						else if(x<=220 & y<=10) rgb_reg=3'b010;
 						end
 					5 : begin
-						if (pi1|pi2|pi3|pi4|pi5)rgb_reg = 3'b011;
+						if (pi1|pi2|pi3|pi4|pi5)rgb_reg = 3'b111;
 						else if(x<=220 & y<=10) rgb_reg= 3'b010;
 						end
 					4 : begin
-						if (pi1|pi2|pi3|pi4)rgb_reg = 3'b011;
+						if (pi1|pi2|pi3|pi4)rgb_reg = 3'b111;
 						else if(x<=220 & y<=10) rgb_reg=3'b010;
 						end
 					3:begin
-						if (pi1|pi2|pi3)rgb_reg = 3'b011;
+						if (pi1|pi2|pi3)rgb_reg = 3'b111;
 						else if(x<=220 & y<=10) rgb_reg=3'b010;
 						end
 					2:begin
-						if (pi1|pi2)rgb_reg = 3'b011;
+						if (pi1|pi2)rgb_reg = 3'b111;
 						else if(x<=220 & y<=10) rgb_reg=3'b010;
 						end
 					1:begin
-						if (pi1)rgb_reg = 3'b011;
+						if (pi1)rgb_reg = 3'b111;
 						else if(x<=220 & y<=10) rgb_reg=3'b010;
 						end
 					0: begin
@@ -105,31 +105,31 @@ module Imagen(
 				case (vidasd)    														//Dibuja las vidas del jugador de la derecha
 		
 					7:begin
-						if (pd1|pd2|pd3|pd4|pd5|pd6|pd7) rgb_reg=3'b011;
+						if (pd1|pd2|pd3|pd4|pd5|pd6|pd7) rgb_reg=3'b111;
 						else if(x>=220 & y<=10) rgb_reg=3'b010;
 						end
 					6:begin
-						if (pd1|pd2|pd3|pd4|pd5|pd6) rgb_reg=3'b011;
+						if (pd1|pd2|pd3|pd4|pd5|pd6) rgb_reg=3'b111;
 						else if(x>=220 & y<=10) rgb_reg=3'b010;
 						end
 					5:begin
-						if (pd1|pd2|pd3|pd4|pd5) rgb_reg=3'b011;
+						if (pd1|pd2|pd3|pd4|pd5) rgb_reg=3'b111;
 						else if(x>=220 & y<=10) rgb_reg=3'b010;
 						end
 					4:begin
-						if (pd1|pd2|pd3|pd4) rgb_reg=3'b011;
+						if (pd1|pd2|pd3|pd4) rgb_reg=3'b111;
 						else if(x>=220 & y<=10) rgb_reg=3'b010;
 						end
 					3:begin
-						if (pd1|pd2|pd3) rgb_reg=3'b011;
+						if (pd1|pd2|pd3) rgb_reg=3'b111;
 						else if(x>=220 & y<=10) rgb_reg=3'b010;
 						end
 					2:begin
-						if (pd1|pd2) rgb_reg=3'b011;
+						if (pd1|pd2) rgb_reg=3'b111;
 						else if(x>=220 & y<=10) rgb_reg=3'b010;
 						end
 					1:begin
-						if (pd1) rgb_reg=3'b011;
+						if (pd1) rgb_reg=3'b111;
 						else if(x>=220 & y<=10) rgb_reg=3'b010;
 						end
 					0: begin
@@ -147,7 +147,5 @@ module Imagen(
         end
     end
  
-    // output
-    //assign rgb = (video_on) ? rgb_reg : 3'b000;
-	assign rgb = rgb_reg;
+			assign rgb = rgb_reg;
 endmodule
